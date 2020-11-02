@@ -7,6 +7,6 @@ class Main {
 
     private static void doBinarySearch() {
         BinarySearchTree binarySearchTree = new BinarySearchTree();
-        System.out.println("is Binary Tree? - " + binarySearchTree.test());
+        binarySearchTree.test();
     }
 }

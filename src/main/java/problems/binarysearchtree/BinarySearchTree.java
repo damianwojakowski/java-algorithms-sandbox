@@ -2,10 +2,11 @@ package problems.binarysearchtree;
 
 public class BinarySearchTree {
 
-    public boolean test() {
-//        return testSmallBinaryTree();
-//        return testBiggerBinaryTree();
-        return testFalseBinaryTree();
+    public void test() {
+        System.out.println("testSmallBinaryTree - Should be TRUE: " + testSmallBinaryTree());
+        System.out.println("testBiggerBinaryTree - Should be TRUE: " + testBiggerBinaryTree());
+        System.out.println("testFalseBinaryTree - Should be FALSE: " + testFalseBinaryTree());
+        System.out.println("testFalseBinaryTree2 - Should be FALSE: " + testFalseBinaryTree2());
     }
 
     private boolean testSmallBinaryTree() {
@@ -40,10 +41,10 @@ public class BinarySearchTree {
         //     / \
         //    4   7
         //   / \
-        //  2   3
+        //  1   3
         //
         // Response: FALSE since 3 is lower than 4 and is on the right side of 4
-        Node node = new Node(5, new Node(4, new Node(1), new Node(4)), new Node(7));
+        Node node = new Node(5, new Node(4, new Node(1), new Node(3)), new Node(7));
 
         return isValidBinaryTree(node);
     }
@@ -58,7 +59,7 @@ public class BinarySearchTree {
         //  2   6
         //
         // Response: should be FALSE since 6 is higher than first node and is on the left side of first node
-        Node node = new Node(5, new Node(4, new Node(1), new Node(4)), new Node(7));
+        Node node = new Node(5, new Node(4, new Node(2), new Node(6)), new Node(7));
 
         return isValidBinaryTree(node);
     }
@@ -67,17 +68,17 @@ public class BinarySearchTree {
      * verify whether a BinaryTree is valid
      */
     public boolean isValidBinaryTree(Node binaryTree) {
-        return isValidBinaryTreeHelper(binaryTree);
+        return isValidBinaryTreeHelper(binaryTree, 0, 100);
     }
 
-    private boolean isValidBinaryTreeHelper(Node node) {
-        if (node == null || node.right == null && node.left == null) {
+    private boolean isValidBinaryTreeHelper(Node node, int minLimit, int maxLimit) {
+        if (node == null) {
             return true;
         }
 
-        return (node.left.value < node.value && node.right.value > node.value) &&
-                isValidBinaryTreeHelper(node.left) &&
-                isValidBinaryTreeHelper(node.right);
+        return (node.value > minLimit && node.value < maxLimit &&
+                isValidBinaryTreeHelper(node.left, minLimit, node.value) &&
+                isValidBinaryTreeHelper(node.right, node.value, maxLimit));
 
     }
 }
